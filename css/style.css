@@ -71,6 +71,23 @@ nav li a {
 nav li a:hover {
   color: #426187;
 }
+#toggle-dark-mode {
+  background: none;
+  border: 2px solid #e3a917;
+  border-radius: 50px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #e3a917;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#toggle-dark-mode:hover {
+  background-color: #e3a917;
+  color: #231f20;
+  transform: scale(1.1);
+}
+
 
 /* Section Accueil */
 #home {
@@ -254,7 +271,7 @@ nav li a:hover {
   color: #231f20;
   line-height: 1.4;
 }
-}
+
 
 .tabs-container {
   position: relative;
@@ -756,7 +773,7 @@ nav li a:hover {
 /* Date */
 .experience-date {
   position: absolute;
-  left: -90px;
+  left: -150px;
   top: 0;
   background-color: #e3a917;
   color: #ffffff;
@@ -938,10 +955,6 @@ nav li a:hover {
   }
 }
 
-section {
-  opacity: 0;
-  animation: fadeIn 1s ease-out forwards;
-}
 
 
 /* Effet de survol sur les boutons et liens */
@@ -1034,3 +1047,49 @@ section {
   animation: typing 2s steps(30, end) forwards;
 }
 
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #about, #skills, #portfolio, #contact {
+    padding: 100px 20px;
+  }
+
+  .about-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .skills-grid,
+  .portfolio-grid,
+  .mentions-grid,
+  .passions-grid,
+  .soft-skills-grid,
+  .languages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo img {
+    width: 100px;
+  }
+
+  #home h1 {
+    font-size: 3rem;
+  }
+
+  #home h2 {
+    font-size: 1rem;
+  }
+}
