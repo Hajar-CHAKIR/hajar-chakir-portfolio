@@ -1152,16 +1152,11 @@ nav li a:hover {
   .languages-grid {
     grid-template-columns: 1fr;
   }
-}
+
   .soft-skills-grid,
   .passions-grid {
     grid-template-columns: 1fr;
     gap: 25px;
   }
 }
-
-
-
-
-
 
