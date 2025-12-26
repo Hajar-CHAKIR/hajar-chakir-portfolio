@@ -155,10 +155,10 @@ nav li a:hover {
 
 .about-container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr;
   align-items: center;
-  max-width: 1200px;
-  gap: 50px;
+  max-width: 900px;
+  gap: 0;
 }
 
 .photo-section {
@@ -1131,4 +1131,5 @@ nav li a:hover {
     flex-direction: column;
     gap: 20px;
   }
+
 }
