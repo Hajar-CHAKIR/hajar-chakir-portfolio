@@ -1075,6 +1075,10 @@ nav li a:hover {
     height: 200px;
   }
 
+  .languages-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
   /* Skills */
   #skills {
     padding: 100px 20px;
@@ -1140,6 +1144,12 @@ nav li a:hover {
     gap: 20px;
   }
 
+}
+
+@media (max-width: 480px) {
+  .languages-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
