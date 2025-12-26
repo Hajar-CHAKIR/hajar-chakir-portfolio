@@ -211,8 +211,8 @@ nav li a:hover {
 /* Grille des langues */
 .languages-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Espacement ajusté */
-  gap: 30px; /* Espacement entre les cartes */
+  grid-template-columns: repeat(3, 1fr); /* 3 cartes horizontales */
+  gap: 30px;
   justify-items: center;
   margin-top: 20px;
 }
@@ -1141,5 +1141,6 @@ nav li a:hover {
   }
 
 }
+
 
 
