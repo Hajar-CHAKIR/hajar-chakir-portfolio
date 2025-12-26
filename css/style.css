@@ -312,13 +312,16 @@ nav li a:hover {
 
 
 /* Grille des soft skills */
-.soft-skills-grid {
+
+.soft-skills-grid,
+.passions-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 cartes bien espacées */
   gap: 40px;                              /* + d’air entre les cartes */
   justify-items: center;
   margin-top: 40px;
 }
+
 
 .soft-skill-card {
   background-color: #fbf3da;
@@ -358,13 +361,6 @@ nav li a:hover {
 }
 
 /* Grille des passions */
-.passions-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cartes bien espacées */
-  gap: 40px;                              /* + d’air entre les cartes */
-  justify-items: center;
-  margin-top: 40px;
-}
 
 .passion-card {
   background-color: #fbf3da;
@@ -1087,6 +1083,12 @@ nav li a:hover {
   .skills-grid {
     grid-template-columns: 1fr;
   }
+  
+  .soft-skills-grid,
+  .passions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
 
   /* Diplomas */
   #diplomas {
@@ -1151,6 +1153,14 @@ nav li a:hover {
     grid-template-columns: 1fr;
   }
 }
+  .soft-skills-grid,
+  .passions-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}
+
+
 
 
 
