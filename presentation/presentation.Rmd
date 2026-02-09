@@ -1,0 +1,446 @@
+---
+title: "Influence des propriétés stellaires sur les caractéristiques des exoplanètes"
+subtitle: "8INF404"
+author: "Groupe 10 - Hajar CHAKIR, Maïlys DEMOL, Mathias DE RIDDER, Victor GOUPIL"
+institute: "UQAC"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r load-packages, include = FALSE}
+library(tidyverse)
+library(tidymodels)
+library(palmerpenguins)
+library(knitr)
+library(xaringanthemer)
+library(broom)
+library(psych)
+library(corrplot)
+library(kableExtra)
+library(car)
+library(rstatix)
+library(ggpubr)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.retina = 3,
+  dpi = 300,
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "80%",
+  warning = FALSE,
+  message = FALSE
+)
+
+
+style_mono_light(
+   base_color = "#0A2A43",        
+  inverse_header_color = "#FFFFFF",
+  inverse_background_color = "#0A2A43",
+  header_font_family = "Lato",
+  text_font_family = "Inter",
+  text_color = "#1A1A1A",        
+  link_color = "#005F99",
+  code_font_family = "Fira Code",
+  title_slide_background_image = "img/19609.jpg",
+  title_slide_background_size = "cover",
+  title_slide_text_color = "#FFFFFF",
+  background_color = "#FAFAFA",
+  footnote_font_size = "0.7em"
+)
+
+
+```
+
+```{r theme-ggplot, include=FALSE}
+theme_set(
+  theme_minimal(base_family = "Inter") +
+    theme(
+      plot.background = element_rect(fill = "#FAFAFA", color = NA),
+      panel.background = element_rect(fill = "#FAFAFA", color = NA),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      plot.title = element_text(face = "bold", size = 18, color = "#0A2A43"),
+      axis.title = element_text(size = 14),
+      axis.text = element_text(size = 12)
+    )
+)
+
+```
+
+```{r load-data, include=FALSE}
+# Charger vos données ici
+data <- read.csv("../data/TRIEE_PSCompPars_2025.10.21_14.08.28.csv", sep = ";")
+```
+
+```{r conversion-data, include=FALSE}
+# Conversion des types
+data <- data %>%
+  mutate(
+    discoverymethod = as.factor(discoverymethod),
+    disc_year = as.integer(disc_year),
+    pl_orbper = as.numeric(pl_orbper),
+    pl_orbsmax = as.numeric(pl_orbsmax),
+    pl_rade = as.numeric(pl_rade),
+    pl_bmasse = as.numeric(pl_bmasse),
+    pl_dens = as.numeric(pl_dens),
+    pl_orbeccen = as.numeric(pl_orbeccen),
+    pl_insol = as.numeric(pl_insol),
+    pl_orbincl = as.numeric(pl_orbincl),
+    st_rad = as.numeric(st_rad),
+    st_mass = as.numeric(st_mass),
+    st_met = as.numeric(st_met),
+    # st_teff est déjà numérique, on le garde
+    st_age = as.numeric(st_age)  #donnera beaucoup de NA car texte ("janv.00" etc.)
+  )
+
+```
+
+
+
+
+class: inverse, center, middle
+background-image: url("img/4rpnAL.jpg")
+background-size: cover
+
+## Comment les propriétés physiques des exoplanètes varient-elles en fonction des propriétés de l'étoile hôte ?  
+### Les méthodes de découverte des exoplanètes ont-elles un impact sur les propriétés physiques ?  
+
+
+---
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Présentation des données
+
+---
+
+# NASA Exoplanet Archive
+
+- Archive des exoplanètes diffusée par la NASA
+- Données issues de différentes missions d'observation (Kepler, CoRoT, HatNet, ... )
+- Chaque ligne représente une exoplanète
+- `r nrow(data)` exoplanètes relevées (10/21/2025)
+
+
+## Source
+
+> NASA Exoplanet Archive. (2025). Planetary Systems Composite Parameters (PSCompPars) table [Data set]. NASA Exoplanet Science Institute, Caltech/IPAC. https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars <br>
+Données collectées le 21 octobre 2025
+
+---
+
+# Présentation des variables
+- `r ncol(data)` variables utilisées
+
+#### Variables de réponse (Y) :
+
+- Variable de réponse principale : masse de l’exoplanète (pl_bmasse), exprimée en masse terrestre (5,972 2 × 1024 kg). 
+- Seconde variable d’intérêt:  rayon de l’exoplanète (pl_rade), exprimée en rayon terrestre (~ 6 371 km)
+
+#### Variables explicatives (X) :
+
+-   **st_teff** : Température de l’étoile (K), indicateur de son type spectral.
+-   **st_mass** : Masse de l’étoile (en masses solaires), influence la gravité et la stabilité orbitale.
+-   **st_rad** : Rayon de l’étoile (en rayons solaires), lié à la luminosité du système.
+-   **st_met** : Métallicité de l’étoile, associée à la probabilité de formation de planètes.
+-   **st_age** : Âge de l’étoile, pouvant influencer la composition du système planétaire.
+-   **discoverymethod** : Méthode de détection (Transit, Radial Velocity, etc.), pour comparer les types de planètes découvertes.
+-   **disc_year** : Année de découverte, pour observer d’éventuelles tendances temporelles.
+
+---
+
+# Groupes de comparaison
+
+- Plusieurs groupes d'exoplanètes, distingués en fonction de la méthode de découverte
+
+<br>
+
+# Objectifs ?
+
+- Analyser et comprendre comment les propriétés physiques des exoplanètes (masse, rayon, densité) varient selon les caractéristiques de l’étoile hôte (température, masse, métallicité) et selon la méthode de détection utilisée
+
+---
+
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Analyse des corrélations
+
+---
+
+# Méthodes utilisées
+
+- **Corrélations (Pearson/Spearman)** : pour mesurer les relations entre variables continues.  
+
+<div style="font-size:80%">
+```{r correlation, echo=FALSE, fig.width=4}
+# Sélection des variables continues pertinentes
+vars_cont <- c("pl_bmasse", "pl_rade", "pl_dens", "pl_orbper", "pl_orbsmax",
+               "st_teff", "st_rad", "st_mass", "st_met", "st_age", "pl_insol")
+
+# On retire les lignes incomplètes
+df_cor <- data %>% select(all_of(vars_cont)) %>% drop_na()
+
+# --- Corrélations de Pearson ---
+cor_pearson <- cor(df_cor, method = "pearson")
+p_pearson <- psych::corr.test(df_cor, method = "pearson")$p
+
+# Affichage matrice + visualisation
+kable(round(cor_pearson, 2), format = "html")
+
+
+```
+</div>
+
+---
+
+#### Corrélations (Pearson) entre propriétés planétaires et stellaires
+*(plus la couleur est foncée, plus la corrélation est forte)*
+```{r heatmap-correlation-pearson, echo=FALSE}
+corrplot(cor_pearson, method = "color", type = "upper", tl.cex = 0.7)
+```
+
+---
+
+#### Corrélations (Spearman)
+*(plus la couleur est foncée, plus la corrélation est forte)*
+```{r heatmap-correlation-spearman, echo=FALSE}
+cor_spearman <- cor(df_cor, method = "spearman") 
+corrplot(cor_spearman, method = "color", type = "upper", tl.cex = 0.7)
+```
+
+---
+
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Régression linéaire multiple
+
+---
+
+### Régression linéaire multiple
+
+
+```{r regression-lineaire-table, echo=FALSE}
+# On garde les observations avec données complètes et masse > 0
+df_reg <- data %>%
+  filter(!is.na(pl_bmasse), pl_bmasse > 0) %>%
+  mutate(log_pl_bmasse = log10(pl_bmasse))  # transformation log pour normaliser
+
+# Modèle linéaire multiple
+modele <- lm(log_pl_bmasse ~ st_mass + st_teff + st_met + st_age + st_rad, data = df_reg)
+summary(modele)
+```
+
+
+---
+
+class: center, middle
+
+### Vérification des hypothèses
+
+```{r regression-lineaire-verif-1, echo=FALSE}
+par(mfrow = c(1, 2))
+plot(modele, which = 1:2)  # First two diagnostic plots
+```
+---
+
+class: center, middle
+
+```{r regression-lineaire-verif-2, echo=FALSE}
+par(mfrow = c(1, 2)) 
+plot(modele, which = (c(3,5)))
+vif(modele)  # multicolinéarité
+```
+
+---
+### Résumé
+
+```{r regression-lineaire-resume, echo=FALSE}
+# Résumé propre
+kable(tidy(modele, conf.int = TRUE), digits = 3, format = "html")
+```
+
+<br>
+<div style="font-size:90%">
+```{r regression-lineaire-glance, echo=FALSE}
+kable(glance(modele), digits = 3, format = "html")
+```
+</div>
+---
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Comparaison entre méthodes de détection
+
+
+
+---
+### Analyse de la variance
+``` {r transformation-log-AOV, echo = FALSE}
+df_aov <- data %>%
+  filter(!is.na(pl_bmasse), pl_bmasse > 0, !is.na(discoverymethod)) %>%
+  mutate(log_pl_bmasse = log10(pl_bmasse))
+aov_res <- aov(log_pl_bmasse ~ discoverymethod, data = df_aov)
+summary(aov_res)
+```
+
+### Test de Levene
+```{r test-levene, echo = FALSE}
+leveneTest(log_pl_bmasse ~ discoverymethod, data = df_aov)
+```
+
+### Test de Kruskal-Wallis
+```{r test-kruskal, echo = FALSE}
+# Si ANOVA non valide → Kruskal-Wallis
+kruskal_res <- kruskal_test(df_aov, log_pl_bmasse ~ discoverymethod)
+kable(kruskal_res, format = "html")
+```
+
+</div>
+
+
+---
+
+class: center, middle
+
+#### Comparaison des masses planétaires selon la méthode de détection
+
+
+```{r comparaison-masse-plot, fig.width = 8, fig.height = 5, echo = FALSE}
+ggboxplot(
+  df_aov,
+  x = "discoverymethod",
+  y = "log_pl_bmasse",
+  fill = "discoverymethod",
+  add = "jitter",
+  add.params = list(alpha = 0.3, size = 1.2)  # transparence + taille
+) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  ) +
+  labs(
+    y = "log10(Masse planétaire)",
+    x = "Méthode de détection"
+  )
+
+```
+
+---
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Résultats clés
+
+---
+
+### 1. Corrélations principales
+- La masse planétaire (`pl_bmasse`) est modérément corrélée avec :
+  - **le rayon planétaire** (r ≈ 0.40)
+  - **la densité** (r ≈ 0.38)
+- Relations positives mais faibles avec :
+  - **st_mass** (r ≈ 0.21)
+  - **st_rad** (r ≈ 0.20)
+  - **st_teff** (r ≈ 0.14)
+- **Aucune corrélation notable avec l’âge stellaire**.
+
+
+
+### 2. Régression linéaire multiple (log10(pl_bmasse))
+- Effets **significatifs et positifs** :
+  - **st_mass** (β = 0.679, p < 2e−16)
+  - **st_met** (β = 1.014, p < 2e−16)
+  - **st_rad** (β = 0.041, p < 2e−16)
+  - **st_age** (β = 0.010, p = 0.034)
+- Effet **non significatif** :
+  - **st_teff** (p = 0.185)
+
+→ Les étoiles **plus massives, plus riches en métaux et plus grandes** hébergent des planètes **plus massives**.
+
+---
+
+### 3. Comparaisons entre méthodes de détection
+- **ANOVA : très significatif** (p < 2e−16)
+- **Levene : variances ≠ → ANOVA invalide**
+- **Kruskal-Wallis : très significatif** (p < 2e−16)
+
+→ Les masses planétaires diffèrent **fortement** selon la méthode de détection.
+
+
+---
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+# Interprétation des résultats
+
+---
+### Relations étoiles → planètes
+- Les corrélations et le modèle linéaire montrent que :
+  **les étoiles massives, grandes et riches en métaux ont tendance à héberger des planètes plus massives.**
+
+- La température stellaire n’a pas d’effet significatif dans le modèle →  
+  son impact direct est faible comparé aux autres facteurs.
+
+<br>
+
+### Modèle linéaire
+- R² ≈ 0.177 → les propriétés stellaires **expliquent une partie seulement** de la masse planétaire.
+- Le phénomène de formation planétaire est **multifactoriel** et non linéaire.
+
+
+### Méthodes de détection
+- Les méthodes comme **Radial Velocity** détectent préférentiellement :
+  → **des planètes très massives**  
+- Le transit détecte surtout :
+  → **des planètes plus petites mais proches de leur étoile**  
+- Ces biais instrumentaux expliquent les différences observées.
+
+
+
+---
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Conclusion
+
+---
+### Relations astrophysiques mises en évidence
+- Les planètes sont **plus massives** autour d’étoiles :
+  - **massives**
+  - **de grand rayon**
+  - **riches en métaux**
+- L’âge stellaire a un effet **faible mais significatif**.
+
+
+### Influence des méthodes
+- Les distributions des masses diffèrent **fortement** selon la méthode de détection.
+- Ces différences reflètent des **biais instrumentaux**, pas forcément des propriétés astrophysiques.
+
+
+
+### Apports du projet
+- Analyse complète : corrélations, régression, tests non paramétriques.
+- Mise en évidence de tendances cohérentes avec la littérature scientifique.

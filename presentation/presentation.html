@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Influence des propriétés stellaires sur les caractéristiques des exoplanètes</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Groupe 10 - Hajar CHAKIR, Maïlys DEMOL, Mathias DE RIDDER, Victor GOUPIL" />
+    <meta name="date" content="2025-11-26" />
+    <script src="libs/header-attrs-2.30/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Influence des propriétés stellaires sur les caractéristiques des exoplanètes
+]
+.subtitle[
+## 8INF404
+]
+.author[
+### Groupe 10 - Hajar CHAKIR, Maïlys DEMOL, Mathias DE RIDDER, Victor GOUPIL
+]
+.institute[
+### UQAC
+]
+.date[
+### 2025-11-26
+]
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class: inverse, center, middle
+background-image: url("img/4rpnAL.jpg")
+background-size: cover
+
+## Comment les propriétés physiques des exoplanètes varient-elles en fonction des propriétés de l'étoile hôte ?  
+### Les méthodes de découverte des exoplanètes ont-elles un impact sur les propriétés physiques ?  
+
+
+---
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Présentation des données
+
+---
+
+# NASA Exoplanet Archive
+
+- Archive des exoplanètes diffusée par la NASA
+- Données issues de différentes missions d'observation (Kepler, CoRoT, HatNet, ... )
+- Chaque ligne représente une exoplanète
+- 6028 exoplanètes relevées (10/21/2025)
+
+
+## Source
+
+&gt; NASA Exoplanet Archive. (2025). Planetary Systems Composite Parameters (PSCompPars) table [Data set]. NASA Exoplanet Science Institute, Caltech/IPAC. https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&amp;config=PSCompPars &lt;br&gt;
+Données collectées le 21 octobre 2025
+
+---
+
+# Présentation des variables
+- 22 variables utilisées
+
+#### Variables de réponse (Y) :
+
+- Variable de réponse principale : masse de l’exoplanète (pl_bmasse), exprimée en masse terrestre (5,972 2 × 1024 kg). 
+- Seconde variable d’intérêt:  rayon de l’exoplanète (pl_rade), exprimée en rayon terrestre (~ 6 371 km)
+
+#### Variables explicatives (X) :
+
+-   **st_teff** : Température de l’étoile (K), indicateur de son type spectral.
+-   **st_mass** : Masse de l’étoile (en masses solaires), influence la gravité et la stabilité orbitale.
+-   **st_rad** : Rayon de l’étoile (en rayons solaires), lié à la luminosité du système.
+-   **st_met** : Métallicité de l’étoile, associée à la probabilité de formation de planètes.
+-   **st_age** : Âge de l’étoile, pouvant influencer la composition du système planétaire.
+-   **discoverymethod** : Méthode de détection (Transit, Radial Velocity, etc.), pour comparer les types de planètes découvertes.
+-   **disc_year** : Année de découverte, pour observer d’éventuelles tendances temporelles.
+
+---
+
+# Groupes de comparaison
+
+- Plusieurs groupes d'exoplanètes, distingués en fonction de la méthode de découverte
+
+&lt;br&gt;
+
+# Objectifs ?
+
+- Analyser et comprendre comment les propriétés physiques des exoplanètes (masse, rayon, densité) varient selon les caractéristiques de l’étoile hôte (température, masse, métallicité) et selon la méthode de détection utilisée
+
+---
+
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Analyse des corrélations
+
+---
+
+# Méthodes utilisées
+
+- **Corrélations (Pearson/Spearman)** : pour mesurer les relations entre variables continues.  
+
+&lt;div style="font-size:80%"&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pl_bmasse &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pl_rade &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pl_dens &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pl_orbper &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pl_orbsmax &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; st_teff &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; st_rad &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; st_mass &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; st_met &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; st_age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pl_insol &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pl_bmasse &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.21 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pl_rade &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pl_dens &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pl_orbper &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.03 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pl_orbsmax &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.07 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_teff &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_rad &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.32 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_mass &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.39 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_met &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_age &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.08 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pl_insol &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.39 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.08 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+---
+
+#### Corrélations (Pearson) entre propriétés planétaires et stellaires
+*(plus la couleur est foncée, plus la corrélation est forte)*
+&lt;img src="presentation_files/figure-html/heatmap-correlation-pearson-1.png" width="80%" /&gt;
+
+---
+
+#### Corrélations (Spearman)
+*(plus la couleur est foncée, plus la corrélation est forte)*
+&lt;img src="presentation_files/figure-html/heatmap-correlation-spearman-1.png" width="80%" /&gt;
+
+---
+
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Régression linéaire multiple
+
+---
+
+### Régression linéaire multiple
+
+
+
+```
+## 
+## Call:
+## lm(formula = log_pl_bmasse ~ st_mass + st_teff + st_met + st_age + 
+##     st_rad, data = df_reg)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8064 -0.6613 -0.2518  0.7267  3.5528 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.1544660  0.1646576   0.938 0.348342    
+## st_mass      0.5103422  0.0819839   6.225 6.24e-10 ***
+## st_teff      0.0001327  0.0000349   3.803 0.000148 ***
+## st_met       0.7564867  0.1308798   5.780 9.07e-09 ***
+## st_age      -0.0109094  0.0066049  -1.652 0.098804 .  
+## st_rad       0.0312119  0.0081259   3.841 0.000128 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9448 on 1499 degrees of freedom
+##   (4492 observations effacées parce que manquantes)
+## Multiple R-squared:  0.1768,	Adjusted R-squared:  0.1741 
+## F-statistic:  64.4 on 5 and 1499 DF,  p-value: &lt; 2.2e-16
+```
+
+
+---
+
+class: center, middle
+
+### Vérification des hypothèses
+
+&lt;img src="presentation_files/figure-html/regression-lineaire-verif-1-1.png" width="80%" /&gt;
+---
+
+class: center, middle
+
+&lt;img src="presentation_files/figure-html/regression-lineaire-verif-2-1.png" width="80%" /&gt;
+
+```
+##  st_mass  st_teff   st_met   st_age   st_rad 
+## 2.575935 1.668636 1.038626 1.058310 2.016876
+```
+
+---
+### Résumé
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; conf.low &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; conf.high &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.154 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.165 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.938 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.348 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.169 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.477 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_mass &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.510 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.082 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.225 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.350 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.671 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_teff &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.803 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_met &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.756 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.131 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.780 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.013 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_age &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.007 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.652 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.099 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.024 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.002 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; st_rad &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.031 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.008 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.841 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.047 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;div style="font-size:90%"&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; adj.r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sigma &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; logLik &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; AIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; BIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; deviance &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df.residual &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; nobs &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.177 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.174 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.945 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64.403 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2047.033 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4108.066 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4145.282 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1338.066 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1499 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1505 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+---
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Comparaison entre méthodes de détection
+
+
+
+---
+### Analyse de la variance
+
+```
+##                   Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## discoverymethod   10   1950  195.00   251.8 &lt;2e-16 ***
+## Residuals       5986   4635    0.77                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+### Test de Levene
+
+```
+## Levene's Test for Homogeneity of Variance (center = median)
+##         Df F value    Pr(&gt;F)    
+## group   10  29.549 &lt; 2.2e-16 ***
+##       5986                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+### Test de Kruskal-Wallis
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; .y. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; method &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; log_pl_bmasse &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1455.071 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Kruskal-Wallis &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/div&gt;
+
+
+---
+
+class: center, middle
+
+#### Comparaison des masses planétaires selon la méthode de détection
+
+
+&lt;img src="presentation_files/figure-html/comparaison-masse-plot-1.png" width="80%" /&gt;
+
+---
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Résultats clés
+
+---
+
+### 1. Corrélations principales
+- La masse planétaire (`pl_bmasse`) est modérément corrélée avec :
+  - **le rayon planétaire** (r ≈ 0.40)
+  - **la densité** (r ≈ 0.38)
+- Relations positives mais faibles avec :
+  - **st_mass** (r ≈ 0.21)
+  - **st_rad** (r ≈ 0.20)
+  - **st_teff** (r ≈ 0.14)
+- **Aucune corrélation notable avec l’âge stellaire**.
+
+
+
+### 2. Régression linéaire multiple (log10(pl_bmasse))
+- Effets **significatifs et positifs** :
+  - **st_mass** (β = 0.679, p &lt; 2e−16)
+  - **st_met** (β = 1.014, p &lt; 2e−16)
+  - **st_rad** (β = 0.041, p &lt; 2e−16)
+  - **st_age** (β = 0.010, p = 0.034)
+- Effet **non significatif** :
+  - **st_teff** (p = 0.185)
+
+→ Les étoiles **plus massives, plus riches en métaux et plus grandes** hébergent des planètes **plus massives**.
+
+---
+
+### 3. Comparaisons entre méthodes de détection
+- **ANOVA : très significatif** (p &lt; 2e−16)
+- **Levene : variances ≠ → ANOVA invalide**
+- **Kruskal-Wallis : très significatif** (p &lt; 2e−16)
+
+→ Les masses planétaires diffèrent **fortement** selon la méthode de détection.
+
+
+---
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+# Interprétation des résultats
+
+---
+### Relations étoiles → planètes
+- Les corrélations et le modèle linéaire montrent que :
+  **les étoiles massives, grandes et riches en métaux ont tendance à héberger des planètes plus massives.**
+
+- La température stellaire n’a pas d’effet significatif dans le modèle →  
+  son impact direct est faible comparé aux autres facteurs.
+
+&lt;br&gt;
+
+### Modèle linéaire
+- R² ≈ 0.177 → les propriétés stellaires **expliquent une partie seulement** de la masse planétaire.
+- Le phénomène de formation planétaire est **multifactoriel** et non linéaire.
+
+
+### Méthodes de détection
+- Les méthodes comme **Radial Velocity** détectent préférentiellement :
+  → **des planètes très massives**  
+- Le transit détecte surtout :
+  → **des planètes plus petites mais proches de leur étoile**  
+- Ces biais instrumentaux expliquent les différences observées.
+
+
+
+---
+
+class: inverse, center, middle
+background-image: url("img/wp11921823.jpg")
+background-size: cover
+
+# Conclusion
+
+---
+### Relations astrophysiques mises en évidence
+- Les planètes sont **plus massives** autour d’étoiles :
+  - **massives**
+  - **de grand rayon**
+  - **riches en métaux**
+- L’âge stellaire a un effet **faible mais significatif**.
+
+
+### Influence des méthodes
+- Les distributions des masses diffèrent **fortement** selon la méthode de détection.
+- Ces différences reflètent des **biais instrumentaux**, pas forcément des propriétés astrophysiques.
+
+
+
+### Apports du projet
+- Analyse complète : corrélations, régression, tests non paramétriques.
+- Mise en évidence de tendances cohérentes avec la littérature scientifique.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
